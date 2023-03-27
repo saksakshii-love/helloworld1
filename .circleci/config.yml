@@ -4,17 +4,17 @@ jobs:
     docker:
       - image: cimg/ruby:3.0.2
         auth:
-        username: sakshibarbade
-        password: githubpassword@15
+          username: sakshibarbade
+          password: githubpassword@15
     steps:
       - checkout
       - run: echo "A first hello"
       - run: mkdir -p my_workplace 
       - run: echo "Trying out workplaces" > my_workplace/echo-output
-      - persist_to_workplace:
-        root: my_workplace
-        paths:
-          -echo-output
+      - persist_to_workspace:
+          root: my_workspace
+          paths:
+            - echo-output
   two:
     docker:
       - image: cimg/ruby:3.0.2
@@ -24,7 +24,7 @@ jobs:
     steps:
       - checkout
       - run: echo "A more familiar hi"
-      -attach_workplace:
+      - attach_workplace:
          at: my_workplace
       - run: 
          if [[ $(cat my_workplace/echo-output) == "Trying out workspaces" ]]; then
